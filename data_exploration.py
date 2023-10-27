@@ -12,9 +12,13 @@ script_unique_chapters = script.drop_duplicates(subset=['chapter'])
 director_df = script_unique_chapters[['director', 'imdb_rating']]
 
 #print mean of imdb_rating column for each director, sorted by highest to lowest
-print(director_df.groupby('director').mean())
+director_df = director_df.groupby('director').mean()
 
 # add column to director_df that counts the number of chapter entries per director
-# director_df['count'] = script_unique_chapters.groupby('director')['chapter'].count()
+count = script_unique_chapters.groupby('director')['chapter'].count()
 
-# print(director_df.sort_values(by='imdb_rating', ascending=False))
+print(director_df)
+
+director_df['count'] = count.values
+
+print(director_df.sort_values(by='imdb_rating', ascending=False))
