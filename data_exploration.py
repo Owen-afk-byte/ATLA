@@ -49,3 +49,23 @@ sorted_count = count_characters.sort_values(by='no. of chapters', ascending=Fals
 print(sorted_count)
 
 # ******************************************************************************
+
+# filter database to have each character in each chapter
+script_dialogue = script[['chapter', 'character']]
+
+# filter to remove 'Scene Description' from characters
+just_characters_no_scene_desc = script_dialogue.loc[script_dialogue["character"] != 'Scene Description' ]
+
+# should remove instances where 2 characters speak
+# for example "Katara and Sokka" is a value in the character column
+
+# count the number of chapters each character shows up in
+count_dialogue = just_characters_no_scene_desc.groupby('character').count()
+
+# rename the count column to something more appropriate
+count_no_line = count_dialogue.rename({'chapter': 'no. of lines'}, axis='columns')
+
+# sort the count
+sorted_dialogue = count_no_line.sort_values(by='no. of lines', ascending=False)
+
+print(sorted_dialogue)
